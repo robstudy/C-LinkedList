@@ -4,6 +4,7 @@ using namespace std;
 template <class T>
 class LinkedList {
 	public:
+	LinkedList<T>();
 	void push_front(T data);
 	void push_back(T data);
 	void remove(T data);
@@ -26,6 +27,13 @@ class LinkedList {
 };
 
 template <class T>
+LinkedList<T>::LinkedList() {
+	head = NULL;
+	tail = NULL;
+	size = 0;
+};
+
+template <class T>
 void LinkedList<T>::push_front(T data) {
 
 	Node *newNode = new Node(head, NULL, data);
@@ -34,6 +42,7 @@ void LinkedList<T>::push_front(T data) {
 		head = newNode;
 		tail = newNode;
 	} else {
+		head->back = newNode;
 		head = newNode;
 	}
 	size++;
@@ -48,9 +57,66 @@ void LinkedList<T>::push_back(T data) {
 		head = newNode;
 		tail = newNode;
 	} else {
+		tail->next = newNode;
 		tail = newNode;
 	}	
 	size++;
+};
+
+template <class T>
+void LinkedList<T>::remove(T data) {
+	
+	Node *temp = head;
+	
+	if (head->data == data) {
+		head = head->next;
+		temp->next = NULL;
+		delete temp;
+		size--;
+		return;
+	} else if (tail->data == data) {
+		tail = tail->back;
+		tail->next = NULL;
+		delete tail->next;
+		size--;
+		return;
+	}
+	
+	while (temp != NULL) {
+		if (data == temp->data) {
+			temp->back->next = temp->next;
+			temp->back = NULL;
+			temp->next = NULL;
+			delete temp;
+			size--;
+			return;
+		}
+		temp = temp->next;
+	}
+};
+
+template <class T>
+void LinkedList<T>::print() {
+
+	Node *temp = head;
+
+	while (temp != NULL) {
+		cout << temp->data << endl;
+		temp = temp->next;
+	}
+};
+
+template <class T>
+bool LinkedList<T>::search(T data) {
+
+	Node *temp = head;
+
+	while (temp != NULL) {
+		if (data == temp->data) return true;
+		temp = temp->next;
+	}
+	
+	return false;
 };
 
 template <class T>
