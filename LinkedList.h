@@ -4,9 +4,8 @@ using namespace std;
 template <class T>
 class LinkedList {
 	public:
-	LinkedList();
-	void addFront(T data);
-	void addBack(T data);
+	void push_front(T data);
+	void push_back(T data);
 	private:	
 	struct Node {
 		Node *next;
