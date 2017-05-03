@@ -7,10 +7,14 @@ class LinkedList {
 	LinkedList<T>();
 	void push_front(T data);
 	void push_back(T data);
+	void pop_front();
+	void pop_back();
 	void remove(T data);
 	void print();
 	bool search(T data);
 	unsigned int list_size();
+	T front();
+	T back();
 	private:	
 	struct Node {
 		Node *next;
@@ -64,8 +68,29 @@ void LinkedList<T>::push_back(T data) {
 };
 
 template <class T>
-void LinkedList<T>::remove(T data) {
+void LinkedList<T>::pop_front() {
 	
+	if (size == 0) return;
+	head = head->next;
+	head->back = NULL;
+	delete head->back;
+	size--;
+};
+
+template <class T>
+void LinkedList<T>::pop_back() {
+	
+	if (size == 0) return;
+	tail = tail->back;
+	tail->next = NULL;
+	delete tail->next;
+	size--;
+};
+
+template <class T>
+void LinkedList<T>::remove(T data) {
+
+	if (size == 0) return;	
 	Node *temp = head;
 	
 	if (head->data == data) {
@@ -122,4 +147,14 @@ bool LinkedList<T>::search(T data) {
 template <class T>
 unsigned int LinkedList<T>::list_size() {
 	return size;
+};
+
+template <class T>
+T LinkedList<T>::front() {
+	return head->data;
+};
+
+template <class T>
+T LinkedList<T>::back() {
+	return tail->data;
 };
